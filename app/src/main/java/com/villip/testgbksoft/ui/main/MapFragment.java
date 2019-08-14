@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -173,10 +175,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private void saveData(String name, String latitude, String longitude) {
         Point point = new Point(name, latitude, longitude);
 
-        String userID = FirebaseAuth.getInstance().getUid();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(userID).child("point").push().setValue(point, new DatabaseReference.CompletionListener() {
+        databaseReference.child(account.getId()).child("point").push().setValue(point, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
             }

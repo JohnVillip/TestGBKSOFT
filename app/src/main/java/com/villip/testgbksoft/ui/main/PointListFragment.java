@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,7 +66,9 @@ public class PointListFragment extends Fragment {
 
         String userID = FirebaseAuth.getInstance().getUid();
 
-        databaseReference.child(userID).child("point")
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+
+        databaseReference.child(account.getId()).child("point")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -117,8 +121,8 @@ public class PointListFragment extends Fragment {
     public void deletePoint(int position, Parcelable viewState) {
         recyclerViewState = viewState;
 
-        String userID = FirebaseAuth.getInstance().getUid();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
 
-        databaseReference.child(userID).child("point").child(MainActivity.pointWithKeyList.get(position).getKey()).removeValue();
+        databaseReference.child(account.getId()).child("point").child(MainActivity.pointWithKeyList.get(position).getKey()).removeValue();
     }
 }
