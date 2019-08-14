@@ -64,38 +64,38 @@ public class PointListFragment extends Fragment {
     private void addEventFirebaseListener() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        String userID = FirebaseAuth.getInstance().getUid();
-
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
 
-        databaseReference.child(account.getId()).child("point")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        MainActivity.pointWithKeyList.clear();
+        if (account != null) {
+            databaseReference.child(account.getId()).child("point")
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            MainActivity.pointWithKeyList.clear();
 
-                        if(dataSnapshot.getValue() == null) {
-                            displayPointList();
-                            Toast.makeText(getActivity(), "Пока нет ни одной точки", Toast.LENGTH_LONG).show();
-                        } else {
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                Point point = postSnapshot.getValue(Point.class);
+                            if(dataSnapshot.getValue() == null) {
+                                displayPointList();
+                                Toast.makeText(getActivity(), "Пока нет ни одной точки", Toast.LENGTH_LONG).show();
+                            } else {
+                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                    Point point = postSnapshot.getValue(Point.class);
 
-                                PointWithKey pointWithKey = new PointWithKey(point.getName(), point.getLatitude(), point.getLongitude(), postSnapshot.getKey());
-                                MainActivity.pointWithKeyList.add(pointWithKey);
+                                    PointWithKey pointWithKey = new PointWithKey(point.getName(), point.getLatitude(), point.getLongitude(), postSnapshot.getKey());
+                                    MainActivity.pointWithKeyList.add(pointWithKey);
+                                }
+
+                                MainActivity.pointWithKeyList = sortPointList(MainActivity.pointWithKeyList);
+
+                                displayPointList();
                             }
-
-                            MainActivity.pointWithKeyList = sortPointList(MainActivity.pointWithKeyList);
-
-                            displayPointList();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+        }
     }
 
     private ArrayList<PointWithKey> sortPointList(ArrayList<PointWithKey> pointWithKeyList) {
