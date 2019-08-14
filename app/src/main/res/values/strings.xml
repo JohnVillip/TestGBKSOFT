@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TestGBKSOFT</string>
+    <string name="tab_point_list">Список точек</string>
+    <string name="tab_map">Карта</string>
+    <string name="tab_profile">Профиль</string>
+
+    <string name="sign_out">Sign out</string>
+</resources>
