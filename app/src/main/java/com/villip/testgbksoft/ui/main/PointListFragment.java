@@ -55,11 +55,15 @@ public class PointListFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        addEventFirebaseListener();
-
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        addEventFirebaseListener();
+    }
 
     private void addEventFirebaseListener() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
