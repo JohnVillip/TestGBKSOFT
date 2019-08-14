@@ -43,46 +43,48 @@ public class MainActivity extends AppCompatActivity {
         if(account == null) {
             Intent intent = new Intent(this, AuthActivity.class);
             startActivity(intent);
-        }
 
-        title = findViewById(R.id.title);
+            finish();
+        } else {
+            title = findViewById(R.id.title);
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+            SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+            viewPager = findViewById(R.id.view_pager);
+            viewPager.setAdapter(sectionsPagerAdapter);
+            tabLayout = findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setIcon(ICONS[0]);
-        tabLayout.getTabAt(1).setIcon(ICONS[1]);
-        tabLayout.getTabAt(2).setIcon(ICONS[2]);
+            tabLayout.getTabAt(0).setIcon(ICONS[0]);
+            tabLayout.getTabAt(1).setIcon(ICONS[1]);
+            tabLayout.getTabAt(2).setIcon(ICONS[2]);
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch(tab.getPosition()) {
-                    case 0:
-                        title.setText(R.string.tab_point_list);
-                        break;
-                    case 1:
-                        title.setText(R.string.tab_map);
-                        break;
-                    case 2:
-                        title.setText(R.string.tab_profile);
-                        break;
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    switch(tab.getPosition()) {
+                        case 0:
+                            title.setText(R.string.tab_point_list);
+                            break;
+                        case 1:
+                            title.setText(R.string.tab_map);
+                            break;
+                        case 2:
+                            title.setText(R.string.tab_profile);
+                            break;
+                    }
                 }
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
 
-            }
+                }
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
 
